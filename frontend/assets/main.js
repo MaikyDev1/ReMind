@@ -1,26 +1,17 @@
-const sidebar = document.querySelector('.sidebar');
-const navItems = document.querySelectorAll('nav .nav-item');
-const toggle = document.querySelector('.sidebar .toggle');
+var nav = document.getElementById("nav");
+var menu = document.getElementById("menu");
+var span = document.getElementsByTagName("span");
 
-toggle.addEventListener('click', () => {
-
-    if (sidebar.className === 'sidebar')
-        sidebar.classList.add('open');
-    else
-        sidebar.classList.remove('open');
-
-});
-
-navItems.forEach(navItem => {
-
-    navItem.addEventListener('click', () => {
-
-        navItems.forEach(navItem => {
-            navItem.classList.remove('active');
-        });
-
-        navItem.classList.add('active');
-
-    });
-
+menu.addEventListener("click", () => {
+    if (nav.style.width == "85px") {
+        nav.style.width = "300px"
+        for (i = 0; i < 7; i++) {
+            span[i].style.display = "block"
+        }
+    } else {
+        nav.style.width = "85px"
+        for (i = 0; i < 7; i++) {
+            span[i].style.display = "none"
+        }
+    }
 });

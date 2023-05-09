@@ -1,71 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Morphism Dashboard Navbar UI Design</title>
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
     <link rel="stylesheet" href="main_style.css">
-    <title>Document</title>
-    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
 </head>
-    <body>
-        <div class="sidebar">
-            <div class="toggle">
-                <i class="bx bx-chevron-right"></i>
-            </div>
-            <div class="logo">
-                <img src="images/star.png" alt="...">
-            </div>
-            <nav>
-                <div class="nav-title">
-                    Management
+
+<body>
+    <nav class="navbar" id="nav">
+        <button class="toggle-menu" id="menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-items">
+            <div class="admin-profile">
+                <div class="icons">
+                    <img src="user.png" alt="admin">
                 </div>
-                <ul>
-                    <li class="nav-item active">
-                        <i class="bx bxs-dashboard"></i>
-                        <span>Dashboard</span>
-                    </li>
-                    <li class="nav-item">
-                        <i class="bx bxs-bar-chart-alt-2"></i>
-                        <span>Analytics</span>
-                    </li>
-                    <li class="nav-item">
-                        <i class="bx bxs-wallet"></i>
-                        <span>Wallet</span>
-                    </li>
-                    <li class="nav-item">
-                        <i class="bx bxs-bell"></i>
-                        <span>Notifications</span>
-                    </li>
-                    <li class="nav-item">
-                        <i class="bx bxs-cog"></i>
-                        <span>Settings</span>
-                    </li>
-                </ul>
-
-                <hr>
-
-                <div class="nav-title">
-                    Supports
+                <span>Admin</span>
+            </div>
+            <div class="item-list">
+                <div class="icons"><i class='bx bxs-megaphone'></i></div>
+                <span>News</span>
+            </div>
+            <div class="item-list">
+                <div class="icons"><i class='bx bx-tv' ></i></div>
+                <span>Clips</span>
+            </div>
+            <div class="item-list">
+                <div class="icons"><i class='bx bx-joystick' ></i></div>
+                <span>Games</span>
+            </div>
+            <div class="item-list">
+                <div class="icons"><i class="fa-solid fa-heart"></i></div>
+                <span>Community</span>
+            </div>
+            <div class="logout">
+                <div class="icons">
+                    <i class="fa-solid fa-paper-plane"></i>
                 </div>
-
-                <ul>
-                    <li class="nav-item">
-                        <i class="bx bxs-help-circle"></i>
-                        <span>Get Help</span>
-                    </li>
-                    <li class="nav-item">
-                        <i class="bx bxs-message-dots"></i>
-                        <span>Send Feedback</span>
-                    </li>
-                </ul>
-
-            </nav>
-
+                <span>Messages</span>
+            </div>
         </div>
+    </nav>
 
-        <!-- JS File -->
-        <script type="text/javascript" src="main.js"></script>
+    <!-- javascript -->
+    <script src="main.js"></script>
+</body>
 
-    </body>
 </html>
