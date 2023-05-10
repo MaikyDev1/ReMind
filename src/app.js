@@ -58,7 +58,7 @@ const authRoute = require('./routes/auth_route');
 const cdnRoute = require('./routes/cdn_route');
 
 app.use('/auth', authRoute);
-app.use('/cdn', cdn_route);
+app.use('/cdn', cdnRoute);
 app.use('/home', homeRoute);
 /* MIDDLEWARE ROUTES */
 app.get('/', (req, res) => {
