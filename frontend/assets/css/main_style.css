@@ -7,6 +7,7 @@
   font-family: "Poppins" , sans-serif;
 }
 body {
+  height: 100%;
   overflow-y: hidden; /* Hide vertical scrollbar */
   overflow-x: hidden; /* Hide horizontal scrollbar */
 }
@@ -289,7 +290,7 @@ body {
 }
 
 .type1 {
-  background-image: url("../svg/main_waves_1.svg");
+  background-image: url("../../../../../svg/main_waves_1.svg");
 }
 
 /* VIDEO - Player ---------------------------------------------------------------------- */
@@ -301,7 +302,8 @@ body {
   overflow: scroll;
   width: 100%;
   max-width: 400px;
-  border-radius: 15px;
+  border-radius: 10px;
+  border-color: #502299;
   z-index: 2;
 }
 

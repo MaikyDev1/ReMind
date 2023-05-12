@@ -1,7 +1,10 @@
 <div class="app">
     <div class="video">
       <video autoplay="true" playsinline="true" loop="true" class="video-player" onclick="this.paused ? this.play() : this.pause(); arguments[0].preventDefault();"> 
-        <source src="<%=play %>"> 
+        <source src="<%=play %>">
+      </video>
+      <video autoplay="true" playsinline="true" loop="true" class="video-player" onclick="this.paused ? this.play() : this.pause(); arguments[0].preventDefault();"> 
+        <source src="<%=play %>">
       </video>
     </div>
     <div class="video-sidebar">
@@ -23,4 +26,9 @@
       <i class='bx bx-badge-check'></i>
       <p class="description">Best video ahahahah</p>
     </div>
+    <script>
+      window.onscroll = function (e) {  
+        console.log("a");
+      }
+    </script>
 </div>

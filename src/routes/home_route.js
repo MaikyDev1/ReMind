@@ -16,6 +16,14 @@ function isNotAuthenticated(req, res, next){
 
 // ROUTING
 
+router.get('/profile', async (req, res) => {
+    if(req.body == null)
+        return res.redirect("../404");
+    res.render("profile", {
+        requser: req.user
+    })
+})
+
 router.get('/news', async (req, res) => {
     
 })

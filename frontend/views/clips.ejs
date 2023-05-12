@@ -15,5 +15,21 @@
   </section>
   <!-- <div class="wave type1"></div> -->
   <%-include('partials/sidebar') %>
+  <script>
+    function hasScroll(el, direction) {
+      direction = (direction === 'vertical') ? 'scrollTop' : 'scrollLeft';
+      var result = !! el[direction];
+
+      if (!result) {
+          el[direction] = 1;
+          result = !!el[direction];
+          el[direction] = 0;
+      }
+      return result;
+  }
+
+  alert('vertical? ' + hasScroll(document.body, 'vertical'));
+  alert('horizontal? ' + hasScroll(document.body, 'horizontal'));
+  </script>
 </body>
 </html>
