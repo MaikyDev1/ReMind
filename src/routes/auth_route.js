@@ -5,6 +5,8 @@ const { v4: uuidv4 } = require('uuid');
 
 const passport = require("passport");
 
+let inAccountCreation = [];
+
 // AUTHENTICITY
 
 function isAuthenticated(req, res, next){

@@ -1,0 +1,26 @@
+<div class="app">
+    <div class="video">
+      <video autoplay="true" playsinline="true" loop="true" class="video-player" onclick="this.paused ? this.play() : this.pause(); arguments[0].preventDefault();"> 
+        <source src="<%=play %>"> 
+      </video>
+    </div>
+    <div class="video-sidebar">
+      <div class="button">
+        <i class='bx bx-heart'></i>
+        <p>10</p>
+      </div>
+      <div class="button">
+        <i class='bx bx-bookmark'></i>
+        <p>4</p>
+      </div>
+      <div class="button">
+        <i class='bx bxs-download'></i>
+        <p>1</p>
+      </div>
+    </div>
+    <div class="video-footer">
+      <h3>MaikyDev</h3> 
+      <i class='bx bx-badge-check'></i>
+      <p class="description">Best video ahahahah</p>
+    </div>
+</div>

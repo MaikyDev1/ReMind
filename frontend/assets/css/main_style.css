@@ -6,6 +6,10 @@
   box-sizing: border-box;
   font-family: "Poppins" , sans-serif;
 }
+body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
 .sidebar {
   position: fixed;
   left: 0;
@@ -27,14 +31,17 @@
   position: relative;
 }
 .sidebar .main-logo .icon {
+  width: 10%;
+  color: #fff;
+  margin: 0 20px 0 10px;
   opacity: 0;
   transition: all 0.5s ease;
 }
 .sidebar .main-logo .logo-name {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
   opacity: 0;
+  width: 50%;
+  fill: #fff;
+  margin-right: 20px;
   transition: all 0.5s ease;
 }
 .sidebar.open .main-logo .icon,
@@ -56,7 +63,7 @@
 .sidebar.open .main-logo #btn{
   text-align: right;
 }
-.sidebar i{
+.sidebar i {
   color: #fff;
   height: 60px;
   min-width: 50px;
@@ -231,8 +238,11 @@
 /* HOME ----------------------------------------------------------------------- */
 
 .home-section{
-  position: relative;
+  position: fixed;
   background: #502299;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
   top: 0;
   z-index: -2;
@@ -280,4 +290,82 @@
 
 .type1 {
   background-image: url("../svg/main_waves_1.svg");
+}
+
+/* VIDEO - Player ---------------------------------------------------------------------- */
+
+.app {
+  position: relative;
+  height: 750px;
+  background-color: white;
+  overflow: scroll;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 15px;
+  z-index: 2;
+}
+
+.app::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+}
+
+.app {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.video {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.video-player {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.video-sidebar {
+  position: absolute;
+  top: 48%;
+  right: 10px;
+}
+
+.video-sidebar i {
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.video-sidebar .button {
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+.video-footer {
+  position: relative;
+  bottom: 150px;
+  margin-left: 20px;
+  color: white;
+  display: flex;
+  flex: 1;
+}
+
+.video-footer h3 {
+  padding-bottom: 20px;
+}
+
+.video-footer i {
+  padding: 5px 0 0 5px;
+  color: white;
+  font-size: 20px;
+}
+
+.video-footer .description {
+  position: absolute;
+  top: 25px;
 }

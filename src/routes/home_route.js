@@ -21,15 +21,17 @@ router.get('/news', async (req, res) => {
 })
 
 router.get('/clips', async (req, res) => {
-    
+    res.render("clips");
 })
 
 router.get('/', async (req, res) => {
-    
+    res.render("home", {
+        requser: req.user
+    })
 })
 
 router.get('/upload/clip', isAuthenticated, async (req, res) => {
-    res.render("home");
+    ;
 })
 
 module.exports = router;

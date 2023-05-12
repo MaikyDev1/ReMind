@@ -62,9 +62,6 @@ app.use('/cdn', cdnRoute);
 app.use('/home', homeRoute);
 /* MIDDLEWARE ROUTES */
 app.get('/', (req, res) => {
-    res.render('home', {
-        requser: req.user
-    });
 });
 //app.use('/home', homeRoute);
 
