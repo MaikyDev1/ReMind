@@ -1,72 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../css/register_style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nokoSocial - Responsive Social Media Website Using HTML, CSS & JavaScript</title>
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- ICONSCOUT CDN -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+     <!-- FONTASWOME CDN -->
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="../../../../../style/main_style.css">
 </head>
-<body>
-  <div class="container">
-    <div class="title">Create an acount on Re:Mind</div>
-    <div class="content">
-      <form action="#" id="register">
-        <div class="user-details">
-          <div class="input-box">
-            <span class="details">Username</span>
-            <input type="text" placeholder="Enter you username" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Location</span>
-            <input type="text" placeholder="Enter a location" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Email</span>
-            <input type="text" placeholder="Enter your email" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Country</span>
-            <select id="cars" name="carlist">
-              <option value="gamer">Gamer</option>
-              <option value="developer">Game Developer</option>
-            </select>
-          </div>
-          <div class="input-box">
-            <span class="details">Password</span>
-            <input type="password" placeholder="Enter your password" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Confirm Password</span>
-            <input type="password" placeholder="Confirm your password" required>
-          </div>
-        </div>
-        <div class="gender-details">
-          <input type="radio" name="gender" id="dot-1">
-          <input type="radio" name="gender" id="dot-2">
-          <input type="radio" name="gender" id="dot-3">
-          <span class="gender-title">Gender</span>
-          <div class="category">
-            <label for="dot-1">
-            <span class="dot one"></span>
-            <span class="gender">Male</span>
-          </label>
-          <label for="dot-2">
-            <span class="dot two"></span>
-            <span class="gender">Female</span>
-          </label>
-          <label for="dot-3">
-            <span class="dot three"></span>
-            <span class="gender">Other</span>
-            </label>
-          </div>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" id="signupCheck" />
-          <label for="signupCheck">I accept all terms & conditions</label>
-        </div>
-        <div class="button">
-          <input type="submit" value="Register">
-        </div>
-      </form>
-    </div>
-  </div>
-</body>
+  <body class="register">
+      <div class="login_form">
+        <header>Create Account</header>
+        <form action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Account</span>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="text" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Username</label>
+                            <input type="text" placeholder="Enter your name" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Gender</label>
+                            <select required>
+                                <option disabled selected>Select gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Others</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                          <label>Role</label>
+                          <select required>
+                              <option disabled selected>Select role</option>
+                              <option>Developer</option>
+                              <option>Game Tester</option>
+                              <option>Gamer</option>
+                          </select>
+                        </div>
+                        <div class="input-field">
+                          <label>Password</label>
+                          <input type="password" placeholder="Enter your name" required>
+                        </div>
+                        <div class="input-field">
+                          <label>Password</label>
+                          <input type="password" placeholder="Enter your name" required>
+                        </div>
+                    </div>
+                    <span class="title">About</span>
+                    <div class="input-field">
+                      <label>About you</label>
+                      <input type="text" placeholder="You can create a short description about you. (Max 200 chars)" required style="width: 100%;" maxlength="200">
+                    </div>
+                    <div class="input-field">
+                      <label>Intrests</label>
+                      <input type="text" placeholder="Add all games you like!" required style="width: 100%;" maxlength="200">
+                    </div>
+                    <div class="buttons">
+                      <div class="backBtn">
+                          <i class="uil uil-signin"></i>
+                          <span class="btnText">Login</span>
+                      </div>
+                      <div class="backBtn">
+                        <i class="uil uil-create-dashboard"></i>
+                        <span class="btnText">Create</span>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+      </div>
+  </body>
 </html>

@@ -26,8 +26,9 @@ const passport = require("passport");
 
 initializePassport(
     passport,
-    email => data.findOne({ 'email': email }),
-    uuid => data.findOne({ 'uuid': uuid })
+    // email => data.findOne({ 'email': email }),
+    email => NaN,
+    uuid => NaN
 );
 
 app.use(flash());
@@ -39,7 +40,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({extended: false}))
-
+app.use(express.json());
 
 /*
     VIEW ENGINE -----------------------------------------------------------
@@ -56,9 +57,11 @@ app.use(express.static(path.join(__dirname, '../frontend/assets')));
 const homeRoute = require('./routes/home_route');
 const authRoute = require('./routes/auth_route');
 const cdnRoute = require('./routes/cdn_route');
+const apiRoute = require('./routes/api_route');
 
 app.use('/auth', authRoute);
 app.use('/cdn', cdnRoute);
+app.use('/api', apiRoute);
 app.use('/home', homeRoute);
 /* MIDDLEWARE ROUTES */
 app.get('/', (req, res) => {

@@ -34,7 +34,7 @@ router.get('/clips', async (req, res) => {
 
 router.get('/', async (req, res) => {
     res.render("home", {
-        requser: req.user
+        user: req.user
     })
 })
 

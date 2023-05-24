@@ -1,78 +1,46 @@
-<div class="sidebar">
-    <div class="main-logo">
-        <img src="../../../../../svg/remind.svg" class="icon">
-        <img src="../../../../../svg/remind_name.svg" class="logo-name">
-        <i class='bx bx-menu' id="btn"></i>
+<div class="left">
+    <a class="profile">
+        <div class="profile-photo">
+            <% if (user != null) { %>
+                <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
+            <% } else { %>
+                <img src="./api/profile/image/not_loged/uuid">
+            <% } %>
+        </div>
+        <div class="handle">
+            <% if (user != null) { %>
+                <h4><%= user.username %></h4>
+            <% } else { %>
+                <h4>Not Logged</h4>
+            <% } %>
+            <p class="text-muted">
+                @MaikyDev
+            </p>
+        </div>
+    </a>
+
+    <!-- close button -->
+    <span id="close-btn"><i class="uil uil-bars"></i></span>
+    <!-- end of close button -->
+    <div class="sidebar">
+        <a class="menu-item active">
+            <span><i class="uil uil-newspaper"></i></span><h3>Feed</h3>
+        </a>
+        <a class="menu-item">
+            <span><i class="uil uil-compass"></i></span><h3>Clips</h3>
+        </a>
+        <a class="menu-item" id="messages-notification">
+            <span><i class='bx bx-paper-plane bx-tada'><small class="notification-count">6</small></i></span><h3>Messagse</h3>
+        </a>
+        <a class="menu-item">
+            <span><i class="uil uil-bookmark"></i></span><h3>Saved</h3>
+        </a>
+        <a class="menu-item" id="theme">
+            <span><i class="uil uil-swatchbook"></i></span><h3>Theme</h3>
+        </a>
+        <a class="menu-item">
+            <span><i class="uil uil-user-square"></i></span><h3>Account</h3>
+        </a>                        
     </div>
-    <ul class="nav-list">
-        <li>
-            <i class='bx bx-search'></i>
-            <input type="text" placeholder="Search...">
-            <span class="tooltip">Search</span>
-        </li>
-        <li>
-            <a href="#"><i class='bx bxs-news'></i><span class="links_name">Re:News</span></a>
-            <span class="tooltip">Re:News</span>
-        </li>
-        <li>
-            <a href="#"><i class='bx bx-tv'></i><span class="links_name">Clips</span></a>
-            <span class="tooltip">Clips</span>
-        </li>
-        <li>
-            <a href="#"><i class='bx bx-joystick'></i><span class="links_name">Games</span></a>
-            <span class="tooltip">Games</span>
-        </li>
-        <li>
-            <a href="#"><i class='bx bxs-bookmark'></i><span class="links_name">Saved</span></a>
-            <span class="tooltip">Saved</span>
-        </li>
-        <li>
-            <a href="#"><i class='bx bx-cog' ></i><span class="links_name">Setting</span></a>
-            <span class="tooltip">Setting</span>
-        </li>
-        <li>
-            <a href="#">
-                <!-- daca ai msg -->
-                <!-- <i class='bx bx-paper-plane' ></i> -->
-                <!-- si daca nu ai -->
-                <i class='bx bx-paper-plane bx-tada'></i>
-                <span class="links_name">Messages</span></a>
-            <span class="tooltip">Messages</span>
-        </li>
-        <li class="profile">
-            <div class="profile-details">
-                <img src="images/profile.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name">Load from ejs</div>
-                    <div class="job">profile type</div>
-                </div>
-            </div>
-            <i class='bx bxs-color' id="log_out" ></i>
-        </li>
-    </ul>
+    <label for="create-post" class="btn btn-primary" onclick="getAndLoadNewPosts()">New Post</label>
 </div>
-
-<script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-
-    closeBtn.addEventListener("click", ()=>{
-        sidebar.classList.toggle("open");
-        menuBtnChange();//calling the function(optional)
-    });
-
-    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
-        sidebar.classList.toggle("open");
-        menuBtnChange(); //calling the function(optional)
-    });
-
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-        if(sidebar.classList.contains("open")){
-            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        } else {
-            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-        }
-    }
-</script>

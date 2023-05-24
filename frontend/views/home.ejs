@@ -1,19 +1,124 @@
 <!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="en" dir="ltr">
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title> ReMind | Home </title>
-    <link rel="stylesheet" href="css/main_style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nokoSocial - Responsive Social Media Website Using HTML, CSS & JavaScript</title>
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+    <!-- ICONSCOUT CDN -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+     <!-- FONTASWOME CDN -->
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="style/main_style.css">
+</head>
 <body>
-    <div class="wave type1"></div>
-    <%-include('partials/sidebar') %>
-    <section class="home-section">
-        <div class="text">Dashboard</div>
-    </section>
+    <nav>
+        <div class="container">
+            <img src="../../../../../svg/logo/test.svg" class="logo-name">
+            <div class="search-bar">
+                <i class="uil uil-search"></i>
+                <input type="search" placeholder="Search games or creators">
+            </div>
+            <div class="create">
+                <!-- button for sidebar -->
+                <button id="menu-btn"><i class="uil uil-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!---------------------- SIDEBAR ------------------------------>
+            <%- include('partials/sidebar') %>
+
+            <!---------------------- FEED ------------------------------>
+            <div class="middle">
+                <form class="create-post" action="/api/create/new/post" method="POST">
+                    <div class="profile-photo">
+                        <% if (user != null) { %>
+                            <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
+                        <% } else { %>
+                            <img src="./api/profile/image/not_loged/uuid">
+                        <% } %>
+                    </div>
+                    <% if (user != null) { %>
+                        <input type="text" name="description" placeholder="Write something" id="create-post" required>
+                        <input type="hidden" name="game" value="all"/>
+                        <input type="hidden" name="title" value="@<%= user.username %>"/>
+                        <input type="hidden" name="image" value="no_image"/>
+                        <input type="submit" value="Post" class="btn btn-primary">
+                    <% } else { %>
+                        <input type="text" placeholder="Please login to post." id="create-post" disabled>
+                        <input type="submit" value="Login" class="btn btn-primary">
+                    <% } %> 
+                </form>
+                <!---------------------- FEED POSTS ------------------------------>
+                <div class="feeds" id="feeds">
+                </div>
+            </div>
+            </div>
+            <!---------------------- END OF FEED ------------------------------>
+        </div>
+    </main>
+    <script src="./js/feed_loader.js" defer></script>
+
+<!---------------------- THEME ------------------------------>
+ <div class="customize-theme">
+    <div class="card">
+        <h2>Customize your view</h2>
+        <p class="text-muted">Manage your font size, color, and background.</p>
+
+        <!------------ FONT SIZES ------------->
+        <div class="font-size">
+            <h4>Font Size</h4>
+            <div>
+                <h6>Aa</h6>
+            <div class="choose-size">
+                <span class="font-size-1"></span>
+                <span class="font-size-2"></span>
+                <span class="font-size-3"></span>
+                <span class="font-size-4"></span>
+                <span class="font-size-5"></span>
+            </div>
+            <h3>Aa</h3>
+            </div>
+        </div>
+
+        <!------------ PRIMARY COLORS ------------->
+        <div class="color">
+            <h4>Color</h4>
+            <div class="choose-color">
+            <span class="color-1 active"></span>
+            <span class="color-2"></span>
+            <span class="color-3"></span>
+            <span class="color-4"></span>
+            <span class="color-5"></span>
+            </div>
+        </div>
+
+        <!---------- BACKGROUND COLORS ------------>
+        <div class="background">
+            <h4>Background</h4>
+            <div class="choose-bg">
+                <div class="bg-1 active">
+                    <span></span>
+                    <h5 for="bg-1">Light</h5>
+                </div>
+                <div class="bg-2">
+                    <span></span>
+                    <h5>Dim</h5>
+                </div>
+                <div class="bg-3">
+                    <span></span>
+                    <h5 for="bg-3">Lights Out</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./js/index.js"></script>
 </body>
 </html>
