@@ -1,31 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
-:root {
-  --primary-color-hue: 252;
-  --dark-color-lightness: 17%;
-  --light-color-lightness: 95%;
-  --white-color-lightness: 100%;
-
-  --color-white: hsl(252, 30%, var(--white-color-lightness));
-  --color-light: hsl(252, 30%, var(--light-color-lightness));
-  --color-gray: hsl(var(--primary-color-hue), 15%, 65%);
-  --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
-  --color-secondary: hsl(252, 100%, 90%);
-  --color-success: hsl(120, 95%, 65%);
-  --color-danger: hsl(0, 95%, 65%);
-  --color-dark: hsl(252, 30%, var(--dark-color-lightness));
-  --color-black: hsl(252, 30%, 10%);
-
-  --border-radius: 2rem;
-  --card-border-radius: 1rem;
-  --btn-padding: 0.6rem 2rem;
-  --search-padding: 0.6rem 1rem;
-  --card-padding: 1rem;
-
-  --sticky-top-left: 5.4rem;
-  --sticky-top-right: -18rem;
-}
-
 *,
 *::before,
 *::after {
@@ -860,4 +834,83 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   .login_form form .fields .input-field{
       width: 100%;
   }
+}
+
+.popup button {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  padding: 14px 22px;
+  border: none;
+  background: #4070f4;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.popup button:hover {
+  background-color: #265df2;
+}
+.popup button.show-modal,
+.modal-box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.popup section.active .show-modal {
+  display: none;
+}
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+.popup section.active .overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+.popup .modal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 380px;
+  width: 100%;
+  padding: 30px 20px;
+  border-radius: 24px;
+  background-color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+section.active .modal-box {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.modal-box i {
+  font-size: 70px;
+  color: #4070f4;
+}
+.modal-box h2 {
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: 500;
+  color: #333;
+}
+.modal-box h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+  text-align: center;
+}
+.modal-box .buttons {
+  margin-top: 25px;
+}
+.modal-box button {
+  font-size: 14px;
+  padding: 6px 12px;
+  margin: 0 10px;
 }

@@ -12,6 +12,12 @@
      <!-- FONTASWOME CDN -->
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="style/main_style.css">
+    <style>
+        .html {
+            font-size: <%= cookies.fontSize || 'inherit' %>;
+        }
+    </style>
+    <%- include('partials/var', {cookies: cookies}) %>
 </head>
 <body>
     <nav>
@@ -27,7 +33,6 @@
             </div>
         </div>
     </nav>
-
     <main>
         <div class="container">
             <!---------------------- SIDEBAR ------------------------------>

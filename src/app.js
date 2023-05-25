@@ -17,12 +17,13 @@ db.then(() => {
 })
 
 /*
-    AUTH -----------------------------------------------------------
+    EXPRESS AND AUTH -----------------------------------------------------------
 */
 
 const data = require("../src/database/models/user_data");
 const initializePassport = require('../src/auth/passport_config');
 const passport = require("passport");
+const cookieParser = require('cookie-parser');
 
 initializePassport(
     passport,
@@ -41,6 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({extended: false}))
 app.use(express.json());
+app.use(cookieParser());
 
 /*
     VIEW ENGINE -----------------------------------------------------------

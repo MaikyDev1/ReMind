@@ -71,31 +71,38 @@ fontSizes.forEach(size => {
         removeSizeSelector();
         let fontSize;
         size.classList.toggle('active');
+        
+        let sticky_top_left = 0;
+        let sticky_top_right = 0;
 
         if(size.classList.contains('font-size-1')){
             fontSize = '10px';
-            root.style.setProperty('----sticky-top-left', '5.4rem');
-            root.style.setProperty('----sticky-top-right', '5.4rem');
+            sticky_top_left = '5.4rem';
+            sticky_top_right = '5.4rem';
         } else if(size.classList.contains('font-size-2')){
             fontSize = '13px';
-            root.style.setProperty('----sticky-top-left', '5.4rem');
-            root.style.setProperty('----sticky-top-right', '-7rem');
+            sticky_top_left = '5.4rem';
+            sticky_top_right = "-7rem";
         } else if(size.classList.contains('font-size-3')){
             fontSize = '16px';
-            root.style.setProperty('----sticky-top-left', '-2rem');
-            root.style.setProperty('----sticky-top-right', '-17rem');
+            sticky_top_left = '-2rem';
+            sticky_top_right = "-17rem";
         } else if(size.classList.contains('font-size-4')){
             fontSize = '19px';
-            root.style.setProperty('----sticky-top-left', '-5rem');
-            root.style.setProperty('----sticky-top-right', '-25rem');
+            sticky_top_left = '-5rem';
+            sticky_top_right = "-25rem";
         } else if(size.classList.contains('font-size-5')){
             fontSize = '22px';
-            root.style.setProperty('----sticky-top-left', '-12rem');
-            root.style.setProperty('----sticky-top-right', '-35rem');
+            sticky_top_left = '-12rem';
+            sticky_top_right = "-35rem";
         }
-
-        // change font size of the root html element
-    document.querySelector('html').style.fontSize = fontSize;
+        // UPDATE
+        root.style.setProperty('----sticky-top-left', sticky_top_left);
+        root.style.setProperty('----sticky-top-right', sticky_top_right);
+        setCookie("sticky_top_left", sticky_top_left, 60);
+        setCookie("sticky_top_right", sticky_top_right, 60);
+        setCookie("font_size", fontSize, 60);
+        document.querySelector('html').style.fontSize = fontSize;
     })
     
 })
@@ -130,6 +137,7 @@ colorPalette.forEach(color => {
         color.classList.add('active');
 
         root.style.setProperty('--primary-color-hue', primaryHue);
+        setCookie("hue", primaryHue, 60);
     })
 })
 
@@ -148,6 +156,9 @@ const changeBG = () => {
     root.style.setProperty('--light-color-lightness', lightColorLightness);
     root.style.setProperty('--white-color-lightness', whiteColorLightness);
     root.style.setProperty('--dark-color-lightness', darkColorLightness);
+    setCookie("dark_color_lightness", darkColorLightness, 60);
+    setCookie("light_color_lightness", lightColorLightness, 60);
+    setCookie("white_color_lightness", whiteColorLightness, 60);
 }
 
 
@@ -159,6 +170,9 @@ Bg1.addEventListener('click', () => {
     Bg2.classList.remove('active');
     Bg3.classList.remove('active');
     // remove customized changes from local storage
+    setCookie("dark_color_lightness", 17, 60);
+    setCookie("light_color_lightness", 95, 60);
+    setCookie("white_color_lightness", 100, 60);
     window.location.reload();
 });
 
@@ -203,7 +217,14 @@ closeBtn.addEventListener('click', () => {
     document.querySelector('.left').style.display = 'none';
 })
 
-
-
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
 
 // THE END

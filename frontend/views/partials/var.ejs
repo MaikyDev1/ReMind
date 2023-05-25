@@ -1,0 +1,28 @@
+<style>
+:root {
+    --primary-color-hue: <%= cookies.hue == null ? 252 : cookies.hue %>;
+    --dark-color-lightness: <%= cookies.dark_color_lightness == null ? 17 : cookies.dark_color_lightness.replace("%", "") %>%;
+    --light-color-lightness: <%= cookies.light_color_lightness == null ? 95 : cookies.light_color_lightness.replace("%", "") %>%;
+    --white-color-lightness: <%= cookies.white_color_lightness == null ? 100 : cookies.white_color_lightness.replace("%", "") %>%;
+  
+    --color-white: hsl(252, 30%, var(--white-color-lightness));
+    --color-light: hsl(252, 30%, var(--light-color-lightness));
+    --color-gray: hsl(var(--primary-color-hue), 15%, 65%);
+    --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
+    --color-secondary: hsl(252, 100%, 90%);
+    --color-success: hsl(120, 95%, 65%);
+    --color-danger: hsl(0, 95%, 65%);
+    --color-dark: hsl(252, 30%, var(--dark-color-lightness));
+    --color-black: hsl(252, 30%, 10%);
+  
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+    --btn-padding: 0.6rem 2rem;
+    --search-padding: 0.6rem 1rem;
+    --card-padding: 1rem;
+    --font-size: <%= cookies.font_size == null ? "12px" : cookies.font_size %>;
+  
+    --sticky-top-left: <%= cookies.sticky_top_left == null ? "5.4rem" : cookies.sticky_top_left %>;
+    --sticky-top-right: <%= cookies.sticky_top_right == null ? "-18rem" : cookies.sticky_top_right %>;
+}
+</style>

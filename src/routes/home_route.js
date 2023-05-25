@@ -33,8 +33,10 @@ router.get('/clips', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
+    console.log(req.cookies);
     res.render("home", {
-        user: req.user
+        user: req.user,
+        cookies: req.cookies
     })
 })
 
