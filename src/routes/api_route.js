@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 let admins = [];
 let games = [ "Minecraft", "Fortnite", "League of Legends", "PlayerUnknown's Battlegrounds", "Counter-Strike: Global Offensive", "Apex Legends", "Dota 2", "Call of Duty: Warzone", "Grand Theft Auto V", "Overwatch", "Valorant", "Roblox", "Among Us", "Rocket League", "World of Warcraft", "FIFA", "Hearthstone", "Destiny 2", "The Legend of Zelda: Breath of the Wild", "Assassin's Creed Valhalla", "The Witcher 3: Wild Hunt", "Terraria", "Genshin Impact", "The Sims 4", "Red Dead Redemption 2", "Rainbow Six Siege", "Monster Hunter: World", "Pokémon Sword and Shield", "Super Smash Bros. Ultimate", "Animal Crossing: New Horizons", "Cyberpunk 2077", "Mortal Kombat 11", "Final Fantasy XIV", "Fall Guys: Ultimate Knockout", "Call of Duty: Modern Warfare", "Farming Simulator 19", "NBA 2K21", "Madden NFL 21", "GTA Online", "Mortal Kombat X", "Borderlands 3", "Tom Clancy's The Division 2", "Warframe", "Rust", "Call of Duty: Black Ops Cold War", "Star Wars Jedi: Fallen Order", "Death Stranding" ]
 
+const multer = require('multer');
+const upload = multer({ dest: path.join(__dirname + '../../../content/user-upload') });
+const pfp = multer({ dest: path.join(__dirname + '../../../content/profile_pictures') });
+
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated())
         return next()
@@ -43,6 +47,20 @@ router.get('/profile/image/:tagId/:fromWhat', async (req, res) => {
         res.redirect('/404');
 })
 
+router.get('/cdn/uploaded/image/:imageName', async (req, res) => {
+    var options = {
+        root: path.join(__dirname, '../../content'),
+        dotfiles: 'deny',
+        headers: {
+          'x-timestamp': Date.now(),
+          'x-sent': true,
+          'Content-Type': 'image/png',
+          'Content-Disposition': 'inline'
+        }
+    }
+   res.sendFile(`/user-upload/${req.params.imageName}`, options);
+})
+
 router.get('/create/new/game', isAuthenticated, async (req, res) => {
     
 })
@@ -50,6 +68,29 @@ router.get('/create/new/game', isAuthenticated, async (req, res) => {
 router.get('/internal/get/games/all', async (req, res) => {
     res.send(games);
 })
+
+// POST DELETE
+// THIS WILL DELETE ANY POSTS by the ID
+// 401 - no access
+// 400 - bad req
+// 200 - sters
+router.push('/internal/user/update/:updateWhat/:profileID', pfp.single('file'), async (req, res) => {
+    let what = req.params.updateWhat;
+    let profile_id = req.params.profileID;
+    if(req.user == null)
+        return res.sendStatus(401);
+    if(req.user != profile_id)
+        return res.sendStatus(401);
+    switch(what) {
+        case "image": {
+            if(req.file != null) {
+                
+            } else
+                return res.sendStatus(400);
+        }
+    }
+})
+
 
 router.get('/profile/user/:userId/:getWhat', async (req, res) => {
     let id = req.params.userId;
@@ -104,7 +145,7 @@ router.get('/internal/validate/:check/:value', async (req, res) => {
 
 // ==================== POSTS ===========================================================
 
-router.post('/internal/post/create/new', isAuthenticated, async (req, res) => {
+router.post('/internal/post/create/new', upload.single('file'), isAuthenticated, async (req, res) => {
     const post = await posts.create({
         user_id: req.user.id,
         posted_by: req.user.username,
@@ -115,12 +156,11 @@ router.post('/internal/post/create/new', isAuthenticated, async (req, res) => {
         content: {
             title: req.body.title,
             description: req.body.description,
-            image: req.body.image
+            image: (req.file != null ? req.file.filename : "no_image")
         }
     });
     const savedUser = await post.save();
     await data.findByIdAndUpdate(req.user.id, {$push: { posts: savedUser.id }})
-    res.redirect("/home");
 })
 
 // POST DELETE
