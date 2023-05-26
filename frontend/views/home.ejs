@@ -16,6 +16,8 @@
 </head>
 <body>
     <script>
+        const customLoader = "feed"; 
+        const profile_id = null;
         var user_id = '<%= user != null ? user.id : "Not Logged" %>';
     </script>
     <nav>
@@ -38,7 +40,7 @@
 
             <!---------------------- FEED ------------------------------>
             <div class="middle">
-                <form class="create-post" action="/api/create/new/post" method="POST">
+                <form class="create-post" action="api/internal/post/create/new" method="POST">
                     <div class="profile-photo">
                         <% if (user != null) { %>
                             <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
@@ -65,7 +67,7 @@
             <!---------------------- END OF FEED ------------------------------>
         </div>
     </main>
-    <script src="./js/feed_loader.js"></script>
+    <script src="./js/content_loader.js"></script>
 
 <!---------------------- THEME ------------------------------>
  <div class="customize-theme">
@@ -122,6 +124,141 @@
     </div>
 </div>
 
+<section class="popup user_interaction">
+    <span class="overlay"></span>
+    <div class="modal-box">
+      <i class="uil uil-apps"></i>
+      <h2>User Interaction</h2>
+      <div class="buttons">
+        <button onclick="processInteraction('profile')">Open Profile</button>
+      </div>
+      <div class="buttons">
+        <button onclick="processInteraction('send_message')">Send Message</button>
+      </div>
+      <div class="buttons auth_for_interaction">
+        <button onclick="processInteraction('delete_post')">Delete Message</button>
+      </div>
+      <div class="buttons">
+        <button onclick="removeMedal('.user_interaction')">Close</button>
+      </div>
+    </div>
+</section>
+<section class="popup login_needed">
+    <span class="overlay"></span>
+    <div class="modal-box">
+      <i class="uil uil-user-exclamation"></i>
+      <h2>You are not logged</h2>
+      <h3>You need to login is you want to perform this action.</h3>
+      <div class="buttons">
+        <button onclick="window.location.href = '../../auth/login'">Login</button>
+        <button onclick="removeMedal('.login_needed')">Close</button>
+      </div>
+    </div>
+</section>
+
+<section class="popup comments comp_comments">
+    <span class="overlay"></span>
+    <div class="modal-box">
+        <form class="create-comment" action="/api/create/new/post" method="POST">
+            <div class="profile-photo">
+                <% if (user != null) { %>
+                    <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
+                <% } else { %>
+                    <img src="./api/profile/image/not_loged/uuid">
+                <% } %>
+            </div>
+            <% if (user != null) { %>
+                <input type="text" name="description" placeholder="Write a comment" id="user-comment-imput" required>
+                <input type="hidden" name="game" value="all"/>
+                <input type="hidden" name="title" value="@<%= user.username %>"/>
+                <input type="hidden" name="image" value="no_image"/>
+                <input onclick="sendComment()" type="button" value="Post" class="btn btn-primary">
+            <% } else { %>
+                <input type="text" placeholder="Please login to post." id="create-post" disabled>
+                <input onclick="window.location.href = '../../auth/login'" type="button" value="Login" class="btn btn-primary">
+            <% } %> 
+        </form>
+        <div class="comment_box" id="comment_box">
+        </div>
+        <div class="buttons">
+            <button onclick="removeMedal('.comp_comments')">Close</button>
+          </div>
+    </div>
+</section>
+
+<section class="popup posting posting_comp active">
+    <span class="overlay active"></span>
+    <div class="modal-box">
+        <h1>Create new post</h1>
+        <form class="create-post" action="/api/create/new/post" method="POST">
+            <input type="text" name="description" placeholder="Post Title" id="user-title-input" required>
+            <!-- DropDown Search -->
+            <div class="dropdown-selector-warpper">
+                <div class="select-btn">
+                  <span>Select Game</span>
+                  <i class="uil uil-angle-down"></i>
+                </div>
+                <div class="dropdown-selector-content">
+                  <div class="dropdown-selector-search">
+                    <input spellcheck="false" type="text" placeholder="Search">
+                  </div>
+                  <ul class="dropdown-selector-options"></ul>
+                </div>
+            </div>
+              <!-- DropDown Search end -->
+            <input type="text" class="description-input" maxlength="500" name="description" placeholder="Description" id="user-description-input" required>
+            <label for="user-upload">Upload an image (.png)</label><input type="file" name="" placeholder="Image" id="user-upload" required>
+        </form>
+        <div class="comment_box" id="comment_box">
+        </div>
+        <div class="buttons">
+            <button onclick="removeMedal('.posting')">Close</button>
+            <button onclick="removeMedal('.posting')">Send Post</button>
+        </div>
+    </div>
+</section>
+<script>
+    const wrapper = document.querySelector(".dropdown-selector-warpper"),
+    selectBtn = wrapper.querySelector(".select-btn"),
+    searchInp = wrapper.querySelector("input"),
+    options = wrapper.querySelector(".dropdown-selector-options");
+    let games = [];
+    // Made by maiky.dev
+    async function start() {
+        games = await (await fetch('../../../api/internal/get/games/all')).json();
+        addCountry();
+    }
+
+    async function addCountry(selectedGame) {
+        options.innerHTML = "";
+        for(game of games) {
+            let isSelected = game == selectedGame ? "selected" : "";
+            let li = `<li onclick="updateName(this)" class="${isSelected}">${game}</li>`;
+            options.insertAdjacentHTML("beforeend", li);
+        }
+    }
+
+    start();
+
+    function updateName(selectedLi) {
+        searchInp.value = "";
+        addCountry(selectedLi.innerText);
+        wrapper.classList.remove("active");
+        selectBtn.firstElementChild.innerText = selectedLi.innerText;
+    }
+    // Made by maiky.dev
+    searchInp.addEventListener("keyup", () => {
+        let arr = [];
+        let searchWord = searchInp.value.toLowerCase();
+        arr = games.filter(data => {
+            return data.toLowerCase().startsWith(searchWord);
+        }).map(data => {
+            let isSelected = data == selectBtn.firstElementChild.innerText ? "selected" : "";
+            return `<li onclick="updateName(this)" class="${isSelected}">${data}</li>`;
+        }).join("");
+        options.innerHTML = arr ? arr : `<p style="margin-top: 5px; font-size: 14px;">Game not found</p>`;
+    });
+    selectBtn.addEventListener("click", () => wrapper.classList.toggle("active"));</script>
 <script src="./js/index.js"></script>
 </body>
 </html>

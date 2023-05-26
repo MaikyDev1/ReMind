@@ -13,11 +13,13 @@
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="../../../../style/main_style.css">
     <%- include('partials/var', {cookies: cookies}) %>
-</head>
-<body>
     <script>
+        const customLoader = "profile"; 
+        const profile_id = "<%= profile.id %>";
         var user_id = '<%= user != null ? user.id : "Not Logged" %>';
     </script>
+</head>
+<body>
     <nav>
         <div class="container">
             <img src="../../../../../svg/logo/test.svg" class="logo-name">
@@ -38,38 +40,42 @@
 
             <!---------------------- FEED ------------------------------>
             <div class="middle">
-                <section class="main">
-                    <div class="profile-card">
-                      <div class="image">
-                        <!--<img src="images/profile.jpg" alt="" class="profile-pic">-->
-                      </div>
-                      <div class="data">
-                        <h2>Olivia Gomez</h2>
-                        <span>Developer & Designer</span>
-                      </div>
-                      <div class="row">
+                <div class="profile-card">
+                    <div class="image">
+                        <img src="../../../../api/profile/image/<%= profile.profile_picture %>/uuid" alt="" class="profile-pic">
+                    </div>
+                    <div class="data">
+                        <h2><%= profile.username %></h2>
+                        <div>
+                            <span><%= profile.role %>, </span>
+                            <i class="uil uil-map-marker"> </i>
+                            <span><%= profile.location %></span>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="info">
-                          <h3>Following</h3>
-                          <span>120</span>
+                            <h3>Following</h3>
+                            <span>120</span>
                         </div>
                         <div class="info">
-                          <h3>Followers</h3>
-                          <span>5000</span>
+                            <h3>Followers</h3>
+                            <span>5000</span>
                         </div>
                         <div class="info">
-                          <h3>Posts</h3>
-                          <span>209</span>
+                            <h3>Posts</h3>
+                            <span>209</span>
                         </div>
-                      </div>
-                      <div class="buttons">
+                    </div>
+                    <div class="buttons">
                         <a href="#" class="btn">Message</a>
                         <a href="#" class="btn">Follow Me</a>
-                      </div>
+                        <a href="#" class="btn">Edit Profile</a>
                     </div>
-                  </section>
+                </div>
                 <!---------------------- FEED POSTS ------------------------------>
                 <div class="feeds" id="feeds">
                 </div>
+                <script src="../../../../js/content_loader.js"></script>
             </div>
             </div>
             <!---------------------- END OF FEED ------------------------------>
@@ -131,6 +137,6 @@
     </div>
 </div>
 
-<script src="./js/index.js"></script>
+<script src="../../../../../js/index.js"></script>
 </body>
 </html>

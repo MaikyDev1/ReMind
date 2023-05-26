@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const data = require("../database/models/user_data");
 const posts = require("../database/models/posts_data");
+var mongoose = require('mongoose');
 
 // AUTHENTICITY
 
@@ -19,7 +20,11 @@ function isNotAuthenticated(req, res, next){
 // ROUTING
 
 router.get('/profile/:username', async (req, res) => {
-    let foundUser = await data.findOne({username: req.params.username})
+    let foundUser;
+    if(!mongoose.isValidObjectId(req.params.username))
+        foundUser = await data.findOne({username: req.params.username})
+    else 
+        foundUser = await data.findById(req.params.username)
     if(foundUser == null) {
         res.render("../404");
         return;

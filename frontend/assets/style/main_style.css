@@ -284,7 +284,7 @@ main .container .left .profile {
   margin: 0.6rem;
 }
 
-.middle .feed .action-buttons .red {
+.red {
   color: red;
 }
 
@@ -466,7 +466,8 @@ MEDIA QUERIES FOR SMALL LAPTOPS AND BIG TABLETS
 */
 @media screen and (max-width: 1200px) {
   .container {
-    width: 96%;
+    overflow-y: hidden;
+    width: 80%;
   }
 
   nav .create #menu-btn {
@@ -547,8 +548,7 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   }
 
   nav .logo-name {
-    margin-left: 10px;
-    width: 15%;
+    width: 19%;
   }
 
   nav .create label {
@@ -561,9 +561,7 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   }
 
   main .container .left {
-    height: 100vh;
     display: none;
-    position: sticky;
     top: 0px;
   }
 }
@@ -667,6 +665,7 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   background-color: var(--color-white);
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
+
 .login_form header{
   position: relative;
   font-size: 20px;
@@ -718,7 +717,7 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   margin: 6px 0;
   color: #333;
 }
-.login_form form .fields{
+.login_form form .fields {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -731,7 +730,6 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   flex-direction: column;
   margin: 4px 0;
 }
-
 
 .login_form .input-field label{
   font-size: 12px;
@@ -796,7 +794,17 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
 }
 .login_form form .buttons button , .backBtn{
   margin-right: 14px;
+
 }
+
+.login {
+  max-width: 450px;
+}
+
+.login form .fields .input-field{
+  width: 100%;
+}
+
 @media (max-width: 750px) {
   .login_form form{
       overflow-y: scroll;
@@ -814,18 +822,20 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   }
 }
 
+/* MEDALS */
+
 .popup button {
   font-size: 18px;
   font-weight: 400;
-  color: #fff;
-  padding: 14px 22px;
+  color: var(--color-dark);
+  padding: var(--btn-padding);
   border: none;
-  background: #4070f4;
+  background: var(--color-primary);
   border-radius: 6px;
   cursor: pointer;
 }
 .popup button:hover {
-  background-color: #265df2;
+  opacity: 0.8;
 }
 .popup button.show-modal,
 .modal-box {
@@ -840,14 +850,17 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
 }
 .overlay {
   position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   opacity: 0;
   pointer-events: none;
 }
-.popup section.active .overlay {
+.overlay.active {
   opacity: 1;
-  pointer-events: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
 }
 .popup .modal-box {
   display: flex;
@@ -857,12 +870,13 @@ MEDIA QUERIES FOR SMALL TABLETS AND MOBILE PHONES
   width: 100%;
   padding: 30px 20px;
   border-radius: 24px;
-  background-color: #fff;
+  background-color: var(--color-light);
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s ease;
   transform: translate(-50%, -50%) scale(1.2);
 }
+
 section.active .modal-box {
   opacity: 1;
   pointer-events: auto;
@@ -870,18 +884,18 @@ section.active .modal-box {
 }
 .modal-box i {
   font-size: 70px;
-  color: #4070f4;
+  color: var(--color-primary);
 }
 .modal-box h2 {
   margin-top: 20px;
   font-size: 25px;
   font-weight: 500;
-  color: #333;
+  color: var(--color-dark);
 }
 .modal-box h3 {
   font-size: 16px;
   font-weight: 400;
-  color: #333;
+  color: var(--color-dark);
   text-align: center;
 }
 .modal-box .buttons {
@@ -891,4 +905,325 @@ section.active .modal-box {
   font-size: 14px;
   padding: 6px 12px;
   margin: 0 10px;
+}
+.modal-box .disabled {
+  display: none;
+}
+
+/* MEDALS for comments */
+
+.comments .modal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px;
+  width: 100%;
+  padding: 30px 20px;
+  border-radius: 24px;
+  background-color: var(--color-white);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* form */
+
+.comments .create-comment {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0;
+  margin-bottom: 10px;
+  background: var(--color-light);
+  padding: 0.4rem var(--card-padding);
+  border-radius: var(--border-radius);
+}
+
+.comments .create-comment input[type="text"] {
+  justify-self: start;
+  width: 100%;
+  padding-left: 1rem;
+  background: transparent;
+  color: var(--color-dark);
+  margin-right: 1rem;
+}
+
+.comments .comment_box {
+  overflow: auto;
+  width: 100%;
+  height: 300px;
+  display: grid;
+  max-height: 300px;
+  background-color: var(--color-light);
+  border-radius: 10px;
+}
+
+.comments .comment {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 5px 5px 0px 5px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding-bottom: 5px;
+  border-radius: 10px;
+  background-color: var(--color-white);
+}
+
+.comment .user {
+  display: flex;
+  margin: 4px;
+  gap: 0.4rem;
+}
+
+.comments .user img {
+  border-radius: var(--card-border-radius);
+  width: 1.9rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  overflow: hidden;
+}
+
+.comments .comment p {
+  line-break: anywhere;
+  margin: 0.1rem 0;
+  font-size: 15px;
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+}
+
+/* ============================== MEDAL FOR POST CREATION ========================================== */
+
+.posting .modal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px;
+  width: 100%;
+  padding: 30px 20px;
+  border-radius: 24px;
+  background-color: var(--color-white);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* form */
+
+.posting .create-post {
+  width: 100%;
+  align-items: center;
+  margin-top: 0.5rem;
+  justify-content: space-between;
+
+}
+
+/*  STATS ===++++=+=+++=++++++===================== */
+
+.dropdown-selector-warpper {
+  width: 100%;
+}
+.select-btn, li{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.select-btn{
+  height: 50px;
+  padding: 0 20px;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  border-radius: 24px;
+  background-color: var(--color-light);
+  justify-content: space-between;
+}
+
+.select-btn i {
+  font-size: 14px;
+  transition: transform 0.3s linear;
+}
+
+.dropdown-selector-warpper.active .select-btn i {
+  transform: rotate(-180deg);
+}
+
+.dropdown-selector-content {
+  display: none;
+  padding: 20px;
+  margin-top: 0.1rem;
+  margin-bottom: 0.5rem;
+  background: var(--color-light);
+  border-radius: 24px;
+}
+
+.dropdown-selector-warpper.active .dropdown-selector-content{
+  display: block;
+}
+
+.dropdown-selector-content .search {
+  position: relative;
+}
+
+.dropdown-selector-search input {
+  height: 40px;
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 0 20px 0 43px;
+  color: var(--color-dark);
+  border: 2px solid var(--color-white);
+}
+
+.dropdown-selector-search input:focus {
+  padding-left: 42px;
+  border: 2px solid var(--color-primary);
+}
+
+.dropdown-selector-search input::placeholder {
+  color: var(--color-dark);
+}
+
+.dropdown-selector-content .dropdown-selector-options {
+  margin-top: 5px;
+  max-height: 155px;
+  overflow-y: auto;
+  padding-right: 7px;
+}
+.dropdown-selector-options::-webkit-scrollbar {
+  width: 7px;
+}
+.dropdown-selector-options::-webkit-scrollbar-track {
+  background: var(--color-white);
+  border-radius: 25px;
+}
+.dropdown-selector-options::-webkit-scrollbar-thumb {
+  background: var(--color-white);
+  border-radius: 25px;
+}
+.dropdown-selector-options::-webkit-scrollbar-thumb:hover {
+  background: var(--color-white);
+}
+.dropdown-selector-options li {
+  height: 35px;
+  padding: 0 13px;
+  font-size: 14px;
+}
+.dropdown-selector-options li:hover, li.selected {
+  border-radius: 5px;
+  background: var(--color-white);
+}
+
+/* TESTING ................................... */
+
+.posting .create-post input[type="text"] {
+  justify-self: start;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  background: var(--color-light);
+  padding: 0.4rem var(--card-padding);
+  border-radius: var(--border-radius);  
+  color: var(--color-dark);
+  margin-right: 1rem;
+}
+
+.description-input {
+  height: 200px;
+  padding: 0.1rem var(--card-padding);
+}
+
+.posting .create-post input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.posting .create-post label {
+  justify-self: start;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  background: var(--color-light);
+  padding: 0.4rem var(--card-padding);
+  border-radius: var(--border-radius);  
+  color: var(--color-dark);
+  margin-right: 1rem;
+}
+
+/* ---======================== PROFILE PAGE ===================---------- */
+
+.profile-card {
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-radius: 16px;
+  padding: 30px;
+}
+.profile-card .image{
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+.profile-card .image .profile-pic{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.profile-card .data{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+.profile-card .data h2{
+  font-size: 33px;
+  font-weight: 600;
+}
+.profile-card span{
+  font-size: 18px;
+}
+.profile-card .row{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.profile-card .row .info{
+  text-align: center;
+  padding: 0 20px;
+}
+.profile-card .buttons{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.profile-card .buttons .btn{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: var(--color-primary);
+}
+.profile-card .buttons .btn:hover{
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.4);
+}
+
+@media screen and (max-width: 992px) {
+  .profile-card {
+    width: 90%;
+    font-size: 10px;
+  }
 }

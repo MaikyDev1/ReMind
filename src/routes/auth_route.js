@@ -5,8 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 
 const passport = require("passport");
 
-let inAccountCreation = [];
-
 // AUTHENTICITY
 
 function isAuthenticated(req, res, next){
@@ -22,9 +20,8 @@ function isNotAuthenticated(req, res, next){
 }
 
 router.post('/login', isNotAuthenticated, passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/auth/login",
-    failureFlash: true
+    successRedirect: "/home",
+    failureRedirect: "/auth/login"
 }))
 
 router.get('/login', isNotAuthenticated, async (req, res) => {

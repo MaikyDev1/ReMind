@@ -1,62 +1,102 @@
-<!DOCTYPE html>   
-<html>   
-<head>  
-<meta name="viewport" content="width=device-width, initial-scale=1">  
-<title> Login Page </title>  
-<style>   
-Body {  
-  font-family: Calibri, Helvetica, sans-serif;  
-  background-color: pink;  
-}  
-button {   
-       background-color: #4CAF50;   
-       width: 100%;  
-        color: orange;   
-        padding: 15px;   
-        margin: 10px 0px;   
-        border: none;   
-        cursor: pointer;   
-         }   
- form {   
-        border: 3px solid #f1f1f1;   
-    }   
- input[type=text], input[type=password] {   
-        width: 100%;   
-        margin: 8px 0;  
-        padding: 12px 20px;   
-        display: inline-block;   
-        border: 2px solid green;   
-        box-sizing: border-box;   
-    }  
- button:hover {   
-        opacity: 0.7;   
-    }   
-  .cancelbtn {   
-        width: auto;   
-        padding: 10px 18px;  
-        margin: 10px 5px;  
-    }   
-        
-     
- .container {   
-        padding: 25px;   
-        background-color: lightblue;  
-    }   
-</style>   
-</head>    
-<body>    
-    <center> <h1> Student Login Form </h1> </center>   
-    <form action="/auth/login" method="POST">
-        <div class="container">   
-            <label>Email : </label>   
-            <input type="text" placeholder="Enter email" name="email" required>  
-            <label>Password : </label>   
-            <input type="password" placeholder="Enter Password" name="password" required>  
-            <button type="submit">Login</button>   
-            <input type="checkbox" checked="checked"> Remember me   
-            <button type="button" class="cancelbtn"> Cancel</button>   
-            Forgot <a href="#"> password? </a>   
-        </div>   
-    </form>     
-</body>     
-</html>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReMind Official</title>
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- ICONSCOUT CDN -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+     <!-- FONTASWOME CDN -->
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="../../../../../style/main_style.css">
+</head>
+  <body class="register">
+      <div class="login_form login">
+        <header>Login</header>
+        <form id="register_form" method="POST">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Account</span>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Email/Username</label>
+                            <input type="text" id="email" name="email" placeholder="Enter your email or username" required>
+                        </div>
+                        <div class="input-field">
+                          <label>Password</label>
+                          <input type="password" id="password" name="password" placeholder="Enter your name" required>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                      <div class="backBtn" id="go_to_login" onclick="validateForm()"">
+                          <i class="uil uil-signin"></i>
+                          <span class="btnText">Login</span>
+                      </div>
+                      <div class="backBtn" onclick="window.location.href = '/auth/register'">
+                        <i class="uil uil-create-dashboard"></i>
+                        <span class="btnText">Register</span>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <section class="popup password_did_not_matched">
+        <div class="modal-box">
+          <i class="uil uil-lock-access"></i>
+          <h2>Password did not matched</h2>
+          <h3>Please make sure that you enterd similar passwords.</h3>
+          <div class="buttons">
+            <button class="close-btn" onclick="removeMedal('.password_did_not_matched')">Close</button>
+          </div>
+        </div>
+      </section>
+      <section class="popup email_used">
+        <div class="modal-box">
+          <i class="uil uil-envelope-shield"></i>
+          <h2>This email exists</h2>
+          <h3>You tried to use an used email, if this is your email please login</h3>
+          <div class="buttons">
+            <button class="close-btn" onclick="window.location.href = '../auth/login';">Login</button>
+            <button class="close-btn" onclick="removeMedal('.email_used')">Close</button>
+          </div>
+        </div>
+      </section>
+      <section class="popup username_used">
+        <div class="modal-box">
+          <i class="uil uil-tag-alt"></i>
+          <h2>This username exists</h2>
+          <h3>Some other member is using this username! Be more creative :P</h3>
+          <div class="buttons">
+            <button class="close-btn" onclick="removeMedal('.username_used')">Close</button>
+          </div>
+        </div>
+      </section>
+      <script>
+        async function validateForm() {
+            // var login_term = document.getElementById("login_term").value;
+            // var password = document.getElementById("password").value;
+            // let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            // // if mail
+            // if(login_term.match(pattern)) {
+            //   if((await fetch('../../api/internal/validate/email/' + email)).status == 200) {
+            //     showMedal(".email");
+            //   return false;
+            //   }
+            // }
+            document.getElementById('register_form').submit()
+        }
+        function showMedal(name) {
+          let section = document.querySelector(name);
+          section.classList.add("active");
+        }
+        function removeMedal(name) {
+          let section = document.querySelector(name);
+          section.classList.remove("active");
+        }
+      </script>
+  </body>
+</html>

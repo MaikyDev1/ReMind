@@ -141,11 +141,6 @@ colorPalette.forEach(color => {
     })
 })
 
-
-
-
-
-
 // theme BACKGROUND values
 let lightColorLightness;
 let whiteColorLightness;
@@ -207,13 +202,13 @@ Bg3.addEventListener('click', () => {
 
 // show sidebar
 const menuBtn = document.querySelector('#menu-btn');
-menuBtn.addEventListener('click', () => {
+    menuBtn.addEventListener('click', () => {
     document.querySelector('.left').style.display = 'block';
 })
 
 // hide sidebar
 const closeBtn = document.querySelector('#close-btn');
-closeBtn.addEventListener('click', () => {
+    closeBtn.addEventListener('click', () => {
     document.querySelector('.left').style.display = 'none';
 })
 
@@ -227,11 +222,84 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + value + expires + "; path=/";
   }
   
-// LIKES / COMMENTS / SHARES ----------------------------------------------------------------------------------------------
+// LIKES / COMMENTS / SAVE ----------------------------------------------------------------------------------------------
 
-async function addNewLike(postId) {
-    //await fetch("../../api/internal/post/like/" + postId);
-    let post = document.getElementById(postId);
-    var iElement = document.getElementById(postId + "-like-button");
-    iElement = "bx bxs-heart bx-burst";
+async function likePost(postId) {
+    switch((await fetch("../../api/internal/post/like/" + postId)).status) {
+        case 200: {
+            var iElement = document.getElementById(postId + "-like-button");
+            iElement.className = 'bx bxs-heart bx red';
+            break;
+        }
+        case 401: {
+            showMedal('.login_needed');
+            break;
+        }
+        case 900: {
+            (await fetch("../../api/internal/post/unlike/" + postId)).status
+            var iElement = document.getElementById(postId + "-like-button");
+            iElement.className = 'uil uil-heart';
+            break;
+        } 
+    }
+}
+
+// INTERACTIONS
+
+let interactionUserId = null;
+let interactionPostId = null;
+let openCommentsPostId = null;
+
+async function openInteraction(postId, user) {
+    interactionUserId = user;
+    interactionPostId = postId;
+    if((await fetch(`../../../../api/internal/post/delete/${interactionPostId}/false`)).status != 200) {
+        let button = document.querySelector(".auth_for_interaction");
+        button.classList.add("disabled");
+    }
+    showMedal(".user_interaction");
+}
+
+async function processInteraction(type) {
+    switch(type) {
+        case "like": {
+            break;
+        }
+        case "profile": {
+            removeMedal(".user_interaction");
+            window.location.href = './home/profile/' + interactionUserId;
+            break;
+        }
+        case "delete_post": {
+            removeMedal(".user_interaction");
+            await fetch(`../../../../api/internal/post/delete/${interactionPostId}/true`);
+            window.reload;
+            break;
+        }
+    }
+}
+
+async function sendComment() {
+    if(openCommentsPostId == null)
+        return;
+    let comment = document.getElementById("user-comment-imput").value;
+    await fetch(`../../../../api/internal/post/add/comment/${openCommentsPostId}/${comment}`);
+    // reload comments
+    injectComments(openCommentsPostId);
+    document.getElementById("user-comment-imput").value = "";
+}
+
+// MEDAL REMOVAL AND ACTIVATOR
+
+function showMedal(name) {
+    let section = document.querySelector(name);
+    let overlay = document.querySelector(".overlay");
+    overlay.classList.add("active");
+    section.classList.add("active");
+}
+function removeMedal(name) {
+    let section = document.querySelector(name);
+    let overlay = document.querySelector(".overlay");
+    overlay.classList.remove("active");
+    section.classList.remove("active"); 
 }
