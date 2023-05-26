@@ -18,7 +18,6 @@
     <script>
         const customLoader = "feed"; 
         const profile_id = null;
-        let canPost = '<%= user != null ? ".posting_comp" : ".login_needed" %>';
         var user_id = '<%= user != null ? user.id : "Not Logged" %>';
     </script>
     <nav>
@@ -211,17 +210,16 @@
             <input type="text" class="description-input" maxlength="500" name="description" placeholder="Description" id="user-description-input" required>
             <label for="user-upload">Upload an image (.png)</label>
             <input type="file" name="file" placeholder="Image" id="user-upload" required>
-            <!-- <input type="submit" value="Get me the stats!" class="btn btn-default">  -->
+            <input type="submit" value="Get me the stats!" class="btn btn-default"> 
         </form>
         <div class="comment_box" id="comment_box">
         </div>
         <div class="buttons">
             <button onclick="removeMedal('.posting')">Close</button>
-            <button onclick="document.getElementById('send-new-post').submit()">Send Post</button>
+            <button onclick="submit()">Send Post</button>
         </div>
     </div>
 </section>
-
 <script>
     const wrapper = document.querySelector(".dropdown-selector-warpper"),
     selectBtn = wrapper.querySelector(".select-btn"),
@@ -236,7 +234,6 @@
 
     async function submit() {
         document.getElementById("send-new-post").submit();
-        window.location.href = './home';
     }
     
     async function addCountry(selectedGame) {

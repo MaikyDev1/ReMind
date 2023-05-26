@@ -42,7 +42,7 @@ router.post('/register', isNotAuthenticated, async (req, res) => {
             role: req.body.role,
             gender: req.body.gender,
             intersts: req.body.intrests,
-            profile_picture: "default" + Math.floor(Math.random() * 3) + 1,
+            profile_picture: "default" + (Math.floor(Math.random() * 3) + 1),
             settings: {
                 hello: "1"
             }

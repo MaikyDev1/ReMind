@@ -29,19 +29,21 @@ router.get('/profile/image/:tagId/:fromWhat', async (req, res) => {
         dotfiles: 'deny',
         headers: {
           'x-timestamp': Date.now(),
-          'x-sent': true
+          'x-sent': true,
+          'Content-Type': 'image/png',
+          'Content-Disposition': 'inline'
         }
-      }
+    }
     if(req.params.tagId != null)
-        if(req.params.fromWhat == "uuid")
-            res.sendFile(`/profile_pictures/${req.params.tagId}.png`, options);
-        else if(req.params.fromWhat == "user_id") {
+        if(req.params.fromWhat == "uuid") {
+            res.sendFile(`/profile_pictures/${req.params.tagId}`, options);
+        } else if(req.params.fromWhat == "user_id") {
             console.log(mongoose.isValidObjectId(req.params.tagId));
             if(!mongoose.isValidObjectId(req.params.tagId))
                 return;
             let user = await data.findById(req.params.tagId);
             if(user != null)
-                res.sendFile(`/profile_pictures/${user.profile_picture}.png`, options);
+                res.sendFile(`/profile_pictures/${user.profile_picture}`, options);
         }
     else
         res.redirect('/404');
@@ -69,24 +71,25 @@ router.get('/internal/get/games/all', async (req, res) => {
     res.send(games);
 })
 
-// POST DELETE
-// THIS WILL DELETE ANY POSTS by the ID
+// USER UPDATE
 // 401 - no access
 // 400 - bad req
 // 200 - sters
-router.push('/internal/user/update/:updateWhat/:profileID', pfp.single('file'), async (req, res) => {
+router.post('/internal/user/update/:updateWhat/:profileID', pfp.single('file'), async (req, res) => {
     let what = req.params.updateWhat;
     let profile_id = req.params.profileID;
     if(req.user == null)
         return res.sendStatus(401);
-    if(req.user != profile_id)
+    if(req.user.id != profile_id)
         return res.sendStatus(401);
     switch(what) {
         case "image": {
             if(req.file != null) {
-                
+                await data.findByIdAndUpdate(req.user.id, { profile_picture: req.file.filename })
+                return res.sendStatus(200);
             } else
                 return res.sendStatus(400);
+            break;
         }
     }
 })
@@ -161,6 +164,7 @@ router.post('/internal/post/create/new', upload.single('file'), isAuthenticated,
     });
     const savedUser = await post.save();
     await data.findByIdAndUpdate(req.user.id, {$push: { posts: savedUser.id }})
+    return res.redirect("../../../../home");
 })
 
 // POST DELETE

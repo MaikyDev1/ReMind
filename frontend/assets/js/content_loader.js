@@ -2,7 +2,7 @@ let htmlFeedWithPicture = `<div class="feed">
 <div class="head">
     <div class="user">
         <div class="profile-photo">
-            <img src="./api/profile/image/%replace_profile_picture%">
+        <img src="../../../../../api/profile/image/%replace_user_id%/user_id">
         </div>
         <div class="ingo">
             <h3>%replace_title%</h3>
@@ -15,13 +15,13 @@ let htmlFeedWithPicture = `<div class="feed">
 </div>
 
 <div class="photo">
-    <img src="./images/feed-1.jpg">
+    <img src="../../../../../../api/cdn/uploaded/image/%replace_image%">
 </div>
 
 <div class="action-buttons">
     <div class="interaction-buttons">
-        <span><i class="uil uil-heart"></i></span>
-        <span><i class="uil uil-comment-alt"></i></span>
+        <span onclick="likePost('%replace_post_id%');"><i class="%replace_liked_icon%" id="%replace_post_id%-like-button"></i></span>
+        <span onclick="loadComments('%replace_post_id%')"><i class="uil uil-comment-alt"></i></span>
         <span><i class="uil uil-link"></i></span>
     </div>
     <div class="bookmark">
@@ -31,13 +31,14 @@ let htmlFeedWithPicture = `<div class="feed">
 
 <div class="liked-by">
     <!-- write a random pick form the likes -->
-    <span><img src="%replace_random_like_pfp%"></span>
+    <span><img src="../../../../../api/profile/image/%replace_random_like_pfp%"></span>
     <p>Liked by %replace_like_amount% other gamers</b></p>
 </div>
 
 <div class="caption">
     <p><b>%replace_user%</b> %replace_description%</p>
 </div>
+
 <div class="comments text-muted">View %replace_comments% comments</div>
 </div>`;
 
@@ -72,13 +73,10 @@ let htmlFeedWithoutPicture = `<div class="feed">
 
 <div class="liked-by">
     <!-- write a random pick form the likes -->
-    <span><img src="../../../../../api/profile/image/%replace_random_like_pfp%/user_id"></span>
+    <span><img src="../../../../../api/profile/image/%replace_random_like_pfp%"></span>
     <p>Liked by %replace_like_amount% other gamers</b></p>
 </div>
 
-<div class="caption">
-    <p><b>%replace_user%</b> %replace_description%</p>
-</div>
 <div class="comments text-muted">View %replace_comments% comments</div>
 </div>`;
 
@@ -97,7 +95,7 @@ function createPostById(post) {
     if(post.content[0].image === "no_image") {
         newHtml = htmlFeedWithoutPicture;
     } else {
-        newHtml = htmlFeedWithPicture;
+        newHtml = htmlFeedWithPicture.replaceAll("%replace_image%", post.content[0].image);
     }
     newHtml = newHtml.replaceAll("%replace_description%", post.content[0].description)
                     .replaceAll("%replace_like_amount%", post.likes.length)
@@ -109,7 +107,7 @@ function createPostById(post) {
                     .replaceAll("%replace_time%", getTimeDifference(post.post_date))
                     .replaceAll("%replace_title%", post.content[0].title)
                     .replaceAll("%replace_user%", post.posted_by)
-                    .replaceAll("%replace_random_like_pfp%", post.likes.length > 0 ? post.likes[Math.floor(Math.random()*post.likes.length)] : "no_likes")
+                    .replaceAll("%replace_random_like_pfp%", post.likes.length > 0 ? post.likes[Math.floor(Math.random()*post.likes.length)] + "/user_id" : "no_likes/uuid")
                     .replaceAll("%replace_liked_icon%", post.likes.includes(user_id) ? "bx bxs-heart bx red" : "uil uil-heart");
     return newHtml;
 }

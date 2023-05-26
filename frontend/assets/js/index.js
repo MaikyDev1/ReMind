@@ -278,6 +278,9 @@ async function processInteraction(type) {
         }
     }
 }
+async function newPost() {
+    showMedal(canPost);
+}
 
 async function sendComment() {
     if(openCommentsPostId == null)

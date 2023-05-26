@@ -17,6 +17,7 @@
 }
 
 body {
+  text-decoration: none;
   font-family: "Poppins", sans-serif;
   color: var(--color-dark);
   background: var(--color-light);
@@ -39,6 +40,11 @@ body {
 img {
   display: block;
   width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-dark)
 }
 
 .btn {
@@ -262,6 +268,11 @@ main .container .left .profile {
   gap: 1rem;
 }
 
+.middle .image {
+  aspect-ratio: 1/1;
+}
+
+
 .middle .feed .photo {
   border-radius: var(--card-border-radius);
   overflow: hidden;
@@ -271,7 +282,7 @@ main .container .left .profile {
 .middle .feed .text-content {
   line-break: anywhere;
   margin: 0.7rem 0;
-  font-size: 15px;
+  font-size: 16px;
   margin-left: 0.6rem;
   margin-right: 0.6rem;
 }
@@ -954,7 +965,7 @@ section.active .modal-box {
   overflow: auto;
   width: 100%;
   height: 300px;
-  display: grid;
+  display: block;
   max-height: 300px;
   background-color: var(--color-light);
   border-radius: 10px;
@@ -967,7 +978,7 @@ section.active .modal-box {
   justify-content: space-between;
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: fit-content;
   padding-bottom: 5px;
   border-radius: 10px;
   background-color: var(--color-white);
@@ -1023,7 +1034,40 @@ section.active .modal-box {
 
 }
 
-/*  STATS ===++++=+=+++=++++++===================== */
+.posting .create-post input[type="text"] {
+  justify-self: start;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  background: var(--color-light);
+  padding: 0.4rem var(--card-padding);
+  border-radius: var(--border-radius);  
+  color: var(--color-dark);
+  margin-right: 1rem;
+}
+
+.posting .create-post input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.posting .create-post label {
+  justify-self: start;
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  background: var(--color-light);
+  padding: 0.4rem var(--card-padding);
+  border-radius: var(--border-radius);  
+  color: var(--color-dark);
+  margin-right: 1rem;
+}
+
+/* ---======================== SELECTOR ==========================-------- */
 
 .dropdown-selector-warpper {
   width: 100%;
@@ -1118,44 +1162,6 @@ section.active .modal-box {
 .dropdown-selector-options li:hover, li.selected {
   border-radius: 5px;
   background: var(--color-white);
-}
-
-/* TESTING ................................... */
-
-.posting .create-post input[type="text"] {
-  justify-self: start;
-  width: 100%;
-  height: 50px;
-  margin-bottom: 0.5rem;
-  padding-left: 1rem;
-  background: var(--color-light);
-  padding: 0.4rem var(--card-padding);
-  border-radius: var(--border-radius);  
-  color: var(--color-dark);
-  margin-right: 1rem;
-}
-
-.description-input {
-  height: 200px;
-  padding: 0.1rem var(--card-padding);
-}
-
-.posting .create-post input[type="file"] {
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
-}
-
-.posting .create-post label {
-  justify-self: start;
-  cursor: pointer;
-  width: 100%;
-  height: 50px;
-  background: var(--color-light);
-  padding: 0.4rem var(--card-padding);
-  border-radius: var(--border-radius);  
-  color: var(--color-dark);
-  margin-right: 1rem;
 }
 
 /* ---======================== PROFILE PAGE ===================---------- */

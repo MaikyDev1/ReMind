@@ -16,6 +16,7 @@
     <script>
         const customLoader = "profile"; 
         const profile_id = "<%= profile.id %>";
+        let canPost = '<%= user != null ? ".posting_comp" : ".login_needed" %>';
         var user_id = '<%= user != null ? user.id : "Not Logged" %>';
     </script>
 </head>
@@ -36,7 +37,7 @@
     <main>
         <div class="container">
             <!---------------------- SIDEBAR ------------------------------>
-            <%- include('partials/sidebar') %>
+            <%- include('partials/sidebar' ,{loc: "account"}) %>
 
             <!---------------------- FEED ------------------------------>
             <div class="middle">
@@ -54,22 +55,18 @@
                     </div>
                     <div class="row">
                         <div class="info">
-                            <h3>Following</h3>
-                            <span>120</span>
-                        </div>
-                        <div class="info">
-                            <h3>Followers</h3>
-                            <span>5000</span>
+                            <h3>Comments</h3>
+                            <span><%= profile.comments.length %></span>
                         </div>
                         <div class="info">
                             <h3>Posts</h3>
-                            <span>209</span>
+                            <span><%= profile.posts.length %></span>
                         </div>
                     </div>
                     <div class="buttons">
                         <a href="#" class="btn">Message</a>
                         <a href="#" class="btn">Follow Me</a>
-                        <a href="#" class="btn">Edit Profile</a>
+                        <a onclick="showMedal('posting_comp');" class="btn">Edit Profile</a>
                     </div>
                 </div>
                 <!---------------------- FEED POSTS ------------------------------>
@@ -136,6 +133,141 @@
         </div>
     </div>
 </div>
+
+<div class="customize-theme">
+    <div class="card">
+        <h2>Customize your view</h2>
+        <p class="text-muted">Manage your font size, color, and background.</p>
+
+        <!------------ FONT SIZES ------------->
+        <div class="font-size">
+            <h4>Font Size</h4>
+            <div>
+                <h6>Aa</h6>
+            <div class="choose-size">
+                <span class="font-size-1"></span>
+                <span class="font-size-2"></span>
+                <span class="font-size-3"></span>
+                <span class="font-size-4"></span>
+                <span class="font-size-5"></span>
+            </div>
+            <h3>Aa</h3>
+            </div>
+        </div>
+
+        <!------------ PRIMARY COLORS ------------->
+        <div class="color">
+            <h4>Color</h4>
+            <div class="choose-color">
+            <span class="color-1 active"></span>
+            <span class="color-2"></span>
+            <span class="color-3"></span>
+            <span class="color-4"></span>
+            <span class="color-5"></span>
+            </div>
+        </div>
+
+        <!---------- BACKGROUND COLORS ------------>
+        <div class="background">
+            <h4>Background</h4>
+            <div class="choose-bg">
+                <div class="bg-1 active">
+                    <span></span>
+                    <h5 for="bg-1">Light</h5>
+                </div>
+                <div class="bg-2">
+                    <span></span>
+                    <h5>Dim</h5>
+                </div>
+                <div class="bg-3">
+                    <span></span>
+                    <h5 for="bg-3">Lights Out</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="popup user_interaction">
+    <span class="overlay"></span>
+    <div class="modal-box">
+      <i class="uil uil-apps"></i>
+      <h2>User Interaction</h2>
+      <div class="buttons">
+        <button onclick="processInteraction('profile')">Open Profile</button>
+      </div>
+      <div class="buttons">
+        <button onclick="processInteraction('send_message')">Send Message</button>
+      </div>
+      <div class="buttons auth_for_interaction">
+        <button onclick="processInteraction('delete_post')">Delete Message</button>
+      </div>
+      <div class="buttons">
+        <button onclick="removeMedal('.user_interaction')">Close</button>
+      </div>
+    </div>
+</section>
+<section class="popup login_needed">
+    <span class="overlay"></span>
+    <div class="modal-box">
+      <i class="uil uil-user-exclamation"></i>
+      <h2>You are not logged</h2>
+      <h3>You need to login is you want to perform this action.</h3>
+      <div class="buttons">
+        <button onclick="window.location.href = '../../auth/login'">Login</button>
+        <button onclick="removeMedal('.login_needed')">Close</button>
+      </div>
+    </div>
+</section>
+
+<section class="popup comments comp_comments">
+    <span class="overlay"></span>
+    <div class="modal-box">
+        <form class="create-comment" action="/api/create/new/post" method="POST">
+            <div class="profile-photo">
+                <% if (user != null) { %>
+                    <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
+                <% } else { %>
+                    <img src="./api/profile/image/not_loged/uuid">
+                <% } %>
+            </div>
+            <% if (user != null) { %>
+                <input type="text" name="description" placeholder="Write a comment" id="user-comment-imput" required>
+                <input type="hidden" name="game" value="all"/>
+                <input type="hidden" name="title" value="@<%= user.username %>"/>
+                <input type="hidden" name="image" value="no_image"/>
+                <input onclick="sendComment()" type="button" value="Post" class="btn btn-primary">
+            <% } else { %>
+                <input type="text" placeholder="Please login to post." id="create-post" disabled>
+                <input onclick="window.location.href = '../../auth/login'" type="button" value="Login" class="btn btn-primary">
+            <% } %> 
+        </form>
+        <div class="comment_box" id="comment_box">
+        </div>
+        <div class="buttons">
+            <button onclick="removeMedal('.comp_comments')">Close</button>
+          </div>
+    </div>
+</section>
+
+<section class="popup posting posting_comp active">
+    <span class="overlay"></span>
+    <div class="modal-box">
+        <h1>Update your profile</h1>
+        <form id="send-new-post" class="create-post" enctype="multipart/form-data" 
+        action="../../../api/internal/user/update/image/<%= profile.id %>" method="POST">
+            <label for="user-upload">Upload an image (.png)</label>
+            <input type="file" name="file" placeholder="Image" id="user-upload" required>
+            <input type="submit" value="Get me the stats!" class="btn btn-default"> 
+        </form>
+        <div class="comment_box" id="comment_box">
+        </div>
+        <div class="buttons">
+            <button onclick="removeMedal('.posting')">Close</button>
+            <button onclick="submit()">Send Post</button>
+        </div>
+    </div>
+</section>
 
 <script src="../../../../../js/index.js"></script>
 </body>
