@@ -28,18 +28,27 @@ router.post('/login', isNotAuthenticated, passport.authenticate("local", {
 }))
 
 router.get('/login', isNotAuthenticated, async (req, res) => {
-    res.render('auth/login');
+    res.render('auth/login', {
+        cookies: req.cookies
+    });
 })
 
 router.post('/register', isNotAuthenticated, async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const hashedPassword = await bcrypt.hash(req.body.password1, 10);
         const newUser = await data.create({
             uuid: uuidv4(),
             email: req.body.email,
             username: req.body.username,
             password: hashedPassword,
-            settings: {}
+            description: req.body.description,
+            role: req.body.role,
+            gender: req.body.gender,
+            intersts: req.body.intrests,
+            profile_picture: "default" + Math.floor(Math.random() * 3) + 1,
+            settings: {
+                hello: "1"
+            }
         });
         const savedUser = await newUser.save();
         console.log(newUser);
@@ -51,10 +60,12 @@ router.post('/register', isNotAuthenticated, async (req, res) => {
 })
 
 router.get('/register', isNotAuthenticated, async (req, res) => {
-    res.render('auth/register');
+    res.render('auth/register', {
+        cookies: req.cookies
+    });
 })
 
-router.delete("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
     req.logout(req.user, err => {
         if (err) return next(err)
         res.redirect("/")

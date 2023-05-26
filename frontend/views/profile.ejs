@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
      <!-- FONTASWOME CDN -->
     <!-- STYLESHEET -->
-    <link rel="stylesheet" href="style/main_style.css">
+    <link rel="stylesheet" href="../../../../style/main_style.css">
     <%- include('partials/var', {cookies: cookies}) %>
 </head>
 <body>
@@ -38,25 +38,35 @@
 
             <!---------------------- FEED ------------------------------>
             <div class="middle">
-                <form class="create-post" action="/api/create/new/post" method="POST">
-                    <div class="profile-photo">
-                        <% if (user != null) { %>
-                            <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
-                        <% } else { %>
-                            <img src="./api/profile/image/not_loged/uuid">
-                        <% } %>
+                <section class="main">
+                    <div class="profile-card">
+                      <div class="image">
+                        <!--<img src="images/profile.jpg" alt="" class="profile-pic">-->
+                      </div>
+                      <div class="data">
+                        <h2>Olivia Gomez</h2>
+                        <span>Developer & Designer</span>
+                      </div>
+                      <div class="row">
+                        <div class="info">
+                          <h3>Following</h3>
+                          <span>120</span>
+                        </div>
+                        <div class="info">
+                          <h3>Followers</h3>
+                          <span>5000</span>
+                        </div>
+                        <div class="info">
+                          <h3>Posts</h3>
+                          <span>209</span>
+                        </div>
+                      </div>
+                      <div class="buttons">
+                        <a href="#" class="btn">Message</a>
+                        <a href="#" class="btn">Follow Me</a>
+                      </div>
                     </div>
-                    <% if (user != null) { %>
-                        <input type="text" name="description" placeholder="Write something" id="create-post" required>
-                        <input type="hidden" name="game" value="all"/>
-                        <input type="hidden" name="title" value="@<%= user.username %>"/>
-                        <input type="hidden" name="image" value="no_image"/>
-                        <input type="submit" value="Post" class="btn btn-primary">
-                    <% } else { %>
-                        <input type="text" placeholder="Please login to post." id="create-post" disabled>
-                        <input type="submit" value="Login" class="btn btn-primary">
-                    <% } %> 
-                </form>
+                  </section>
                 <!---------------------- FEED POSTS ------------------------------>
                 <div class="feeds" id="feeds">
                 </div>
@@ -65,7 +75,6 @@
             <!---------------------- END OF FEED ------------------------------>
         </div>
     </main>
-    <script src="./js/feed_loader.js"></script>
 
 <!---------------------- THEME ------------------------------>
  <div class="customize-theme">

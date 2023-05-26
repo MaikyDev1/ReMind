@@ -2,9 +2,9 @@
     <a class="profile">
         <div class="profile-photo">
             <% if (user != null) { %>
-                <img src="./api/profile/image/<%= user.profile_picture %>/uuid">
+                <img src="../../../../api/profile/image/<%= user.profile_picture %>/uuid">
             <% } else { %>
-                <img src="./api/profile/image/not_loged/uuid">
+                <img src="../../../../api/profile/image/not_loged/uuid">
             <% } %>
         </div>
         <div class="handle">

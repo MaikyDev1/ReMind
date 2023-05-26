@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const data = require("../database/models/user_data");
+const posts = require("../database/models/posts_data");
 
 // AUTHENTICITY
 
@@ -16,11 +18,16 @@ function isNotAuthenticated(req, res, next){
 
 // ROUTING
 
-router.get('/profile', async (req, res) => {
-    if(req.body == null)
-        return res.redirect("../404");
+router.get('/profile/:username', async (req, res) => {
+    let foundUser = await data.findOne({username: req.params.username})
+    if(foundUser == null) {
+        res.render("../404");
+        return;
+    }
     res.render("profile", {
-        requser: req.user
+        user: req.user,
+        profile: foundUser,
+        cookies: req.cookies
     })
 })
 
@@ -33,7 +40,6 @@ router.get('/clips', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    console.log(req.cookies);
     res.render("home", {
         user: req.user,
         cookies: req.cookies

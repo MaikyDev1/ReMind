@@ -42,14 +42,14 @@ let htmlFeedWithPicture = `<div class="feed">
 </div>`;
 
 let htmlFeedWithoutPicture = `<div class="feed">
-<div class="head">
+<div class="head" id="%replace_post_id%">
     <div class="user">
         <div class="profile-photo">
-            <img src="./api/profile/image/%replace_user_id%/api">
+            <img src="./api/profile/image/%replace_user_id%/user_id">
         </div>
         <div class="ingo">
             <h3>%replace_title%</h3>
-            <small>%replace_game%, %replace_time%</small>
+            <small>For %replace_game%, %replace_time%</small>
         </div>
     </div>
     <span class="edit">
@@ -61,8 +61,8 @@ let htmlFeedWithoutPicture = `<div class="feed">
 
 <div class="action-buttons">
     <div class="interaction-buttons">
-        <span><i class="uil uil-heart"></i></span>
-        <span><i class="uil uil-comment-alt"></i></span>
+        <span onclick="addNewLike('%replace_post_id%');"><i class="%replace_liked_icon%"></i></span>
+        <span onclick=""><i class="uil uil-comment-alt"></i></span>
         <span><i class="uil uil-link"></i></span>
     </div>
     <div class="bookmark">
@@ -72,7 +72,7 @@ let htmlFeedWithoutPicture = `<div class="feed">
 
 <div class="liked-by">
     <!-- write a random pick form the likes -->
-    <span><img src="%replace_random_like_pfp%"></span>
+    <span><img src="./api/profile/image/%replace_random_like_pfp%/user_id"></span>
     <p>Liked by %replace_like_amount% other gamers</b></p>
 </div>
 
@@ -84,22 +84,33 @@ let htmlFeedWithoutPicture = `<div class="feed">
 
 var div = document.getElementById('feeds');
 
+function createPostById(post) {
+    let newHtml;
+    if(post.content[0].image === "no_image") {
+        newHtml = htmlFeedWithoutPicture;
+    } else {
+        newHtml = htmlFeedWithPicture;
+    }
+    newHtml = newHtml.replaceAll("%replace_description%", post.content[0].description)
+                    .replaceAll("%replace_like_amount%", post.likes.length)
+                    .replaceAll("%replace_post_id%", post._id)
+                    .replaceAll("%replace_user_id%", post.user_id)
+                    .replaceAll("%replace_comments%", post.comments.length)
+                    .replaceAll("%replace_game%", post.game)
+                    .replaceAll("%replace_message%", user_id)
+                    .replaceAll("%replace_time%", getTimeDifference(post.post_date))
+                    .replaceAll("%replace_title%", post.title)
+                    .replaceAll("%replace_user%", post.posted_by)
+                    .replaceAll("%replace_random_like_pfp%", post.likes.length > 0 ? post.likes[Math.floor(Math.random()*post.likes.length)] : "no_likes")
+                    .replaceAll("%replace_liked_icon%", post.likes.includes(user_id) ? "bx bxs-heart bx red" : "uil uil-heart");
+    return newHtml;
+}
+
 async function getAndLoadNewPosts(amount) {
     let obj = await (await fetch('./api/internal/get/request/' + amount)).json();
     for(post of obj) {
         var toUpload = document.createElement("div");
-        let newHtml = htmlFeedWithoutPicture;
-        let comments = post.comments;
-        newHtml = newHtml.replace("%replace_description%", post.content[0].description)
-                    .replace("%replace_like_amount%", post.likes)
-                    .replace("%replace_user_id%", post.user_id)
-                    .replace("%replace_comments%", comments.length)
-                    .replace("%replace_game%", post.game)
-                    .replace("%replace_message%", post.game)
-                    .replace("%replace_time%", getTimeDifference(post.post_date))
-                    .replace("%replace_title%", post.title)
-                    .replace("%replace_user%", post.posted_by);
-        toUpload.innerHTML = newHtml;
+        toUpload.innerHTML = createPostById(post);
         div.appendChild(toUpload);
     }
 }

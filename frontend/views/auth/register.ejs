@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nokoSocial - Responsive Social Media Website Using HTML, CSS & JavaScript</title>
+    <title>ReMind Official</title>
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- ICONSCOUT CDN -->
@@ -16,22 +16,22 @@
   <body class="register">
       <div class="login_form">
         <header>Create Account</header>
-        <form action="#">
+        <form id="register_form" method="POST">
             <div class="form first">
                 <div class="details personal">
                     <span class="title">Account</span>
                     <div class="fields">
                         <div class="input-field">
                             <label>Email</label>
-                            <input type="text" placeholder="Enter your email" required>
+                            <input type="text" id="email" name="email" placeholder="Enter your email" required>
                         </div>
                         <div class="input-field">
                             <label>Username</label>
-                            <input type="text" placeholder="Enter your name" required>
+                            <input type="text" id="username" name="username" placeholder="Enter your name" required>
                         </div>
                         <div class="input-field">
                             <label>Gender</label>
-                            <select required>
+                            <select name="gender" required>
                                 <option disabled selected>Select gender</option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="input-field">
                           <label>Role</label>
-                          <select required>
+                          <select name="role" id="role" required>
                               <option disabled selected>Select role</option>
                               <option>Developer</option>
                               <option>Game Tester</option>
@@ -49,28 +49,28 @@
                         </div>
                         <div class="input-field">
                           <label>Password</label>
-                          <input type="password" placeholder="Enter your name" required>
+                          <input type="password" id="password1" name="password1" placeholder="Enter your name" required>
                         </div>
                         <div class="input-field">
                           <label>Password</label>
-                          <input type="password" placeholder="Enter your name" required>
+                          <input type="password" id="password2" name="password2" placeholder="Enter your name" required>
                         </div>
                     </div>
                     <span class="title">About</span>
                     <div class="input-field">
                       <label>About you</label>
-                      <input type="text" placeholder="You can create a short description about you. (Max 200 chars)" required style="width: 100%;" maxlength="200">
+                      <input type="text" name="description" id="description" placeholder="You can create a short description about you. (Max 200 chars)" required style="width: 100%;" maxlength="200">
                     </div>
                     <div class="input-field">
                       <label>Intrests</label>
-                      <input type="text" placeholder="Add all games you like!" required style="width: 100%;" maxlength="200">
+                      <input type="text" name="intrests"  id="intrests" placeholder="Add all games you like!" required style="width: 100%;" maxlength="200">
                     </div>
                     <div class="buttons">
-                      <div class="backBtn">
+                      <div class="backBtn" id="go_to_login" onclick="window.location.href = 'https://www.example.com';">
                           <i class="uil uil-signin"></i>
                           <span class="btnText">Login</span>
                       </div>
-                      <div class="backBtn">
+                      <div class="backBtn" onclick="validateForm()">
                         <i class="uil uil-create-dashboard"></i>
                         <span class="btnText">Create</span>
                       </div>
@@ -79,31 +79,65 @@
             </div>
         </form>
       </div>
-      <section class="popup">
-        <button class="show-modal">Show Modal</button>
-        <span class="overlay"></span>
+      <section class="popup password_did_not_matched">
         <div class="modal-box">
-          <i class="uil uil-exclamation-octagon"></i>
-          <h2>Completed</h2>
-          <h3>You have sucessfully downloaded all the source code files.</h3>
+          <i class="uil uil-lock-access"></i>
+          <h2>Password did not matched</h2>
+          <h3>Please make sure that you enterd similar passwords.</h3>
           <div class="buttons">
-            <button class="close-btn">Ok, Close</button>
-            <button>Open File</button>
+            <button class="close-btn" onclick="removeMedal('.password_did_not_matched')">Close</button>
+          </div>
+        </div>
+      </section>
+      <section class="popup email_used">
+        <div class="modal-box">
+          <i class="uil uil-envelope-shield"></i>
+          <h2>This email exists</h2>
+          <h3>You tried to use an used email, if this is your email please login</h3>
+          <div class="buttons">
+            <button class="close-btn" onclick="window.location.href = '../auth/login';">Login</button>
+            <button class="close-btn" onclick="removeMedal('.email_used')">Close</button>
+          </div>
+        </div>
+      </section>
+      <section class="popup username_used">
+        <div class="modal-box">
+          <i class="uil uil-tag-alt"></i>
+          <h2>This username exists</h2>
+          <h3>Some other member is using this username! Be more creative :P</h3>
+          <div class="buttons">
+            <button class="close-btn" onclick="removeMedal('.username_used')">Close</button>
           </div>
         </div>
       </section>
       <script>
-        const section = document.querySelector("section"),
-        overlay = document.querySelector(".overlay"),
-        showBtn = document.querySelector(".show-modal"),
-        closeBtn = document.querySelector(".close-btn");
-        showBtn.addEventListener("click", () => section.classList.add("active"));
-        overlay.addEventListener("click", () =>
-          section.classList.remove("active")
-        );
-        closeBtn.addEventListener("click", () =>
-          section.classList.remove("active")
-        );
+        async function validateForm() {
+            var email = document.getElementById("email").value;
+            var password1 = document.getElementById("password1").value;
+            var password2 = document.getElementById("password2").value;
+            var username = document.getElementById("username").value;
+            if (password1 !== password2) {
+              showMedal(".password_did_not_matched");
+              return false;
+            }
+            if ((await fetch('../../api/internal/validate/email/' + email)).status != 200) {
+              showMedal(".email_used");
+              return false;
+            }
+            if ((await fetch('../../api/internal/validate/username/' + username)).status != 200) {
+              showMedal(".username_used");
+              return false;
+            }
+            document.getElementById('register_form').submit()
+        }
+        function showMedal(name) {
+          let section = document.querySelector(name);
+          section.classList.add("active");
+        }
+        function removeMedal(name) {
+          let section = document.querySelector(name);
+          section.classList.remove("active");
+        }
       </script>
   </body>
 </html>

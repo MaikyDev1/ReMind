@@ -226,5 +226,12 @@ function setCookie(name, value, days) {
     }
     document.cookie = name + "=" + value + expires + "; path=/";
   }
+  
+// LIKES / COMMENTS / SHARES ----------------------------------------------------------------------------------------------
 
-// THE END
+async function addNewLike(postId) {
+    //await fetch("../../api/internal/post/like/" + postId);
+    let post = document.getElementById(postId);
+    var iElement = document.getElementById(postId + "-like-button");
+    iElement = "bx bxs-heart bx-burst";
+}
